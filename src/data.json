@@ -1,0 +1,88 @@
+{
+  "shoes": [
+    {
+      "id": 1,
+      "color": "red",
+      "size": "9.5",
+      "width": "standard"
+    }, 
+    {
+      "id": 2,
+      "color": "red",
+      "size": "10",
+      "width": "standard"
+    },
+    {
+      "id": 3,
+      "color": "red",
+      "size": "11",
+      "width": "standard"
+    },
+    {
+      "id": 4,
+      "color": "blue",
+      "size": "9",
+      "width": "standard"
+    }, 
+    {
+      "id": 5,
+      "color": "blue",
+      "size": "10",
+      "width": "standard"
+    },
+    {
+      "id": 6,
+      "color": "black",
+      "size": "9",
+      "width": "narrow"
+    }, 
+    {
+      "id": 7,
+      "color": "black",
+      "size": "10",
+      "width": "standard"
+    },
+    {
+      "id": 8,
+      "color": "red",
+      "size": "9",
+      "width": "standard"
+    }, 
+    {
+      "id": 9,
+      "color": "red",
+      "size": "10",
+      "width": "narrow"
+    },
+    {
+      "id": 10,
+      "color": "red",
+      "size": "11",
+      "width": "narrow"
+    },
+    {
+      "id": 11,
+      "color": "blue",
+      "size": "9",
+      "width": "narrow"
+    }, 
+    {
+      "id": 12,
+      "color": "black",
+      "size": "9",
+      "width": "narrow"
+    },
+    {
+      "id": 13,
+      "color": "white",
+      "size": "9",
+      "width": "narrow"
+    },
+    {
+      "id": 14,
+      "color": "white",
+      "size": "14",
+      "width": "narrow"
+    }
+  ]
+}
