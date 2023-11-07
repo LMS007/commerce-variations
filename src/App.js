@@ -10,7 +10,7 @@ function App() {
   const SIZES = 'sizes'
   const WIDTHS = 'widths'
   const variationTypes = [COLORS, SIZES, WIDTHS]
-  const [filteredTypes, setFilteredTypes] = useState(['', '', '']); // 'black', '10.5', 'narrow'
+  const [filters, setFilters] = useState(['', '', '']); // e.g. 'black', '10.5', 'narrow'
 
   useEffect( ()=>{
     const colors = {};
@@ -63,16 +63,16 @@ function App() {
     variations =  {
       colors: {
         red: {
-          sizes: [...]
-          widths: [...]
+          sizes: ['9', '10, ...]
+          widths: ['narrow', 'standard']
           disabled: true
           selected: false
         }, ...
       }
       sizes: {
         standard: {
-          colors: [...]
-          widths: [...]
+          sizes: ['9', '10, ...]
+          widths: ['narrow', 'standard']
           disabled: false
           selected: false
         }, ...
@@ -96,7 +96,7 @@ function App() {
       variationTypes.forEach((filter, filterIndex)=>{
         Object.keys(updatedVariations[filter]).forEach(name=>{
           updatedVariations[filter][name].disabled = false;
-          if(name === filteredTypes[filterIndex]) {
+          if(name === filters[filterIndex]) {
             updatedVariations[filter][name].selected = true;
           } else {
             updatedVariations[filter][name].selected = false;
@@ -105,7 +105,7 @@ function App() {
       })
       
       // apply filters and disable variations as needed
-      filteredTypes.forEach((filter, filterIndex)=>{
+      filters.forEach((filter, filterIndex)=>{
         const filterName = variationTypes[filterIndex]; // sizes, widths, colors, etc.
         const opposingTypes = [...variationTypes]
         opposingTypes.splice(filterIndex, 1);
@@ -123,23 +123,24 @@ function App() {
       });
       setVariations(updatedVariations);
     }
-  }, [filteredTypes])
+  }, [filters])
 
 
   function handleOnFilter(button) {
     if(!button.disabled){
-      const updatedFilteredTypes = [...filteredTypes];
+      const updatedFilters = [...filters];
       const index = variationTypes.indexOf(button.type);
       
-      if (updatedFilteredTypes[index] == button.name) {
+      if (updatedFilters[index] == button.name) {
         // clear filter
-        updatedFilteredTypes[index] = '';
+        updatedFilters[index] = '';
       } else {
-        updatedFilteredTypes[index] = button.name;
+        updatedFilters[index] = button.name;
       }
-      setFilteredTypes(updatedFilteredTypes)
+      setFilters(updatedFilters)
     }
   }
+  
   
   const variationButtons = [];
   variationTypes.forEach((type, index)=>{
@@ -160,10 +161,12 @@ function App() {
 
   return (
     <div className={styles.App}>
-      <ul>
-        {
-          variationTypes?.map((type, index)=>{ 
-            return <ul key={index}>
+      {
+        variationTypes?.map((type, index)=>{ 
+          return (
+          <>
+            <div className={styles.type}>{type.toUpperCase()}</div>
+            <ul key={index}>
               {
                 variationButtons[index]?.map((button)=>{
                   const disabled = button.disabled ? styles.disabled : ''
@@ -174,9 +177,9 @@ function App() {
                 })
               }
             </ul>
-          })
-        }
-      </ul>
+          </>)
+        })
+      }
     </div>
   );
 }

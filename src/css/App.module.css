@@ -1,6 +1,10 @@
 
+.App {
+  padding: 2em;
+}
 .App ul {
   list-style: none;
+  text-align: center;
 }
 .App ul li {
   display: inline-block;
@@ -19,4 +23,10 @@
 }
 .App .selected {
   background-color: #449;
+}
+
+.type {
+  text-align: center;
+  font-weight: 400;
+  font-size: 1.5em;
 }
