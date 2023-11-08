@@ -71,7 +71,7 @@ function App() {
       }
       sizes: {
         standard: {
-          sizes: ['9', '10, ...]
+          colors: ['red', 'black', ...]
           widths: ['narrow', 'standard']
           disabled: false
           selected: false
