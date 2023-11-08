@@ -19,7 +19,7 @@ function App() {
 
     for (let [_index, s] of Object.entries(dataJson.shoes)) {
       // build colors
-      if(!colors[s.color]) {
+      if (!colors[s.color]) {
         colors[s.color] = {
           [WIDTHS]: [s.width],
           [SIZES]: [s.size],
@@ -32,7 +32,7 @@ function App() {
       }
 
       // build sizes
-      if(!sizes[s.size]) {
+      if (!sizes[s.size]) {
         sizes[s.size] = {
           [WIDTHS]: [s.width],
           [COLORS]: [s.color],
@@ -45,7 +45,7 @@ function App() {
       }
 
       // build widths
-      if(!widths[s.width]) {
+      if (!widths[s.width]) {
         widths[s.width] = {
           [SIZES]: [s.size],
           [COLORS]: [s.color],
@@ -62,27 +62,33 @@ function App() {
     e.g.
     variations =  {
       colors: {
-        red: {
-          sizes: ['9', '10, ...]
-          widths: ['narrow', 'standard']
-          disabled: true
-          selected: false
-        }, ...
+        items: {
+          red: {
+            sizes: ['9', '10, ...]
+            widths: ['narrow', 'standard']
+            disabled: true
+            selected: false
+          }, ...
+        }
+        order: [...]
       }
-      sizes: {
-        standard: {
-          colors: ['red', 'black', ...]
-          widths: ['narrow', 'standard']
-          disabled: false
-          selected: false
-        }, ...
-      }
+      sizes: {...}
+      widths: {...}
     }
     */
     setVariations({
-      colors,
-      widths,
-      sizes
+      colors: {
+        items: colors,
+        order: (Object.keys(colors)).sort()
+      },
+      widths: {
+        items: widths,
+        order: (Object.keys(widths)).sort()
+      },
+      sizes: {
+        items: sizes,
+        order: (Object.keys(sizes)).sort((a,b)=>(parseInt(a)-parseInt(b)))
+      }
     })
   }, []);
 
@@ -94,12 +100,13 @@ function App() {
 
       // reset all disabled flags and adjust selections to match buttons clicked by user
       variationTypes.forEach((filter, filterIndex)=>{
-        Object.keys(updatedVariations[filter]).forEach(name=>{
-          updatedVariations[filter][name].disabled = false;
+        Object.keys(updatedVariations[filter].items).forEach(name=>{
+          const variation = updatedVariations[filter].items[name];
+          variation.disabled = false;
           if(name === filters[filterIndex]) {
-            updatedVariations[filter][name].selected = true;
+            variation.selected = true;
           } else {
-            updatedVariations[filter][name].selected = false;
+            variation.selected = false;
           }
         })
       })
@@ -111,8 +118,8 @@ function App() {
         opposingTypes.splice(filterIndex, 1);
           
         for(let opposingType of opposingTypes) {
-          Object.keys(updatedVariations[opposingType]).forEach(name=>{
-            const variation = updatedVariations[opposingType][name];
+          Object.keys(updatedVariations[opposingType].items).forEach(name=>{
+            const variation = updatedVariations[opposingType].items[name];
 
             // disable the item if it does not match the filter
             if (filter && !variation[filterName].includes(filter)) {
@@ -145,16 +152,16 @@ function App() {
   const variationButtons = [];
   variationTypes.forEach((type, index)=>{
     if (variations) {
-      for (let name of Object.keys(variations[type])) {
+      for(let name of variations[type].order) {
+        debugger
         if (!variationButtons[index]) {
           variationButtons[index] = [];
-        }        
+        }
         variationButtons[index].push({
           name,
           type,
-          ...variations[type][name]
+          ...variations[type].items[name]
         })
-        
       }
     }
   })
